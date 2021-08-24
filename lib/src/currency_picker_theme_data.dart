@@ -22,11 +22,15 @@ class CurrencyPickerThemeData {
   /// If null, set to 25
   final double? flagSize;
 
+  /// if null Locale('en')
+  final Locale? locale;
+
   CurrencyPickerThemeData({
     this.shape,
     this.flagSize,
     this.titleTextStyle,
     this.subtitleTextStyle,
     this.backgroundColor,
+    this.locale
   });
 }

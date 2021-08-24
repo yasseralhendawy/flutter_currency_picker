@@ -1,6 +1,7 @@
 import 'package:collection/collection.dart' show IterableExtension;
 import 'package:currency_picker/src/currencies.dart';
 import 'package:currency_picker/src/currency.dart';
+import 'package:flutter/material.dart';
 
 class CurrencyService {
   final List<Currency> _currencies;
@@ -23,7 +24,11 @@ class CurrencyService {
   }
 
   ///Returns the first currency that mach the given name.
-  Currency? findByName(String? name) {
+  Currency? findByName(String? name,{Locale locale = const Locale('en')}) {
+    if (locale.languageCode == 'ar') {
+      return _currencies
+          .firstWhereOrNull((currency) => currency.nameAr == name);
+    }
     return _currencies.firstWhereOrNull((currency) => currency.name == name);
   }
 

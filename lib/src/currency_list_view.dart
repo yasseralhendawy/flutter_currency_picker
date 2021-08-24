@@ -198,7 +198,8 @@ class _CurrencyListViewState extends State<CurrencyListView> {
                           ],
                           if (widget.showCurrencyName) ...[
                             Text(
-                              currency.name,
+                              getCurrencyLang(currency,
+                                  locale: widget.theme?.locale),
                               style: widget.showCurrencyCode
                                   ? _subtitleTextStyle
                                   : _titleTextStyle,
@@ -224,6 +225,12 @@ class _CurrencyListViewState extends State<CurrencyListView> {
     );
   }
 
+  String getCurrencyLang(Currency currency, {Locale? locale}) {
+    return (locale ?? _defaultLocale).languageCode == 'ar'
+        ? currency.nameAr
+        : currency.name;
+  }
+
   void _filterSearchResults(String query) {
     List<Currency> _searchResult = <Currency>[];
 
@@ -232,7 +239,9 @@ class _CurrencyListViewState extends State<CurrencyListView> {
     } else {
       _searchResult = _currencyList
           .where((c) =>
-              c.name.toLowerCase().contains(query.toLowerCase()) ||
+              getCurrencyLang(c, locale: widget.theme?.locale)
+                  .toLowerCase()
+                  .contains(query.toLowerCase()) ||
               c.code.toLowerCase().contains(query.toLowerCase()))
           .toList();
     }
@@ -240,6 +249,7 @@ class _CurrencyListViewState extends State<CurrencyListView> {
     setState(() => _filteredList = _searchResult);
   }
 
+  Locale get _defaultLocale => const Locale('en');
   TextStyle get _defaultTitleTextStyle => const TextStyle(fontSize: 17);
   TextStyle get _defaultSubtitleTextStyle =>
       TextStyle(fontSize: 15, color: Theme.of(context).hintColor);
