@@ -23,8 +23,10 @@ class CurrencyService {
         .firstWhereOrNull((currency) => currency.code == uppercaseCode);
   }
 
+  Currency get defaultCurrency => _currencies.first;
+
   ///Returns the first currency that mach the given name.
-  Currency? findByName(String? name,{Locale locale = const Locale('en')}) {
+  Currency? findByName(String? name, {Locale locale = const Locale('en')}) {
     if (locale.languageCode == 'ar') {
       return _currencies
           .firstWhereOrNull((currency) => currency.nameAr == name);
